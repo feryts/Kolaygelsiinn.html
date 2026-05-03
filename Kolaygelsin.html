@@ -6,383 +6,279 @@
 <title>Kolay Gelsin Takip</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --green: #4CAF50;
-    --green-dark: #388E3C;
-    --green-light: #E8F5E9;
-    --blue: #1976D2;
-    --blue-light: #E3F2FD;
-    --red: #E53935;
-    --orange: #F57C00;
-    --gray: #F5F6FA;
-    --gray2: #ECEFF1;
-    --text: #212121;
-    --text2: #757575;
-    --white: #ffffff;
-    --shadow: 0 2px 16px rgba(0,0,0,0.10);
-    --radius: 18px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--gray);
-    color: var(--text);
-    min-height: 100vh;
-    max-width: 480px;
-    margin: 0 auto;
-    position: relative;
-    overflow-x: hidden;
-  }
+:root {
+  --green:#4CAF50; --green-dark:#388E3C; --green-light:#E8F5E9;
+  --blue:#1976D2; --blue-light:#E3F2FD;
+  --red:#E53935; --orange:#F57C00; --purple:#7B1FA2;
+  --gray:#F5F6FA; --gray2:#ECEFF1;
+  --text:#212121; --text2:#757575; --white:#fff;
+  --shadow:0 2px 16px rgba(0,0,0,0.10); --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Nunito',sans-serif;background:var(--gray);color:var(--text);min-height:100vh;max-width:480px;margin:0 auto;overflow-x:hidden}
 
-  /* LOGO BG */
-  .logo-bg {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70vw;
-    max-width: 320px;
-    opacity: 0.04;
-    pointer-events: none;
-    z-index: 0;
-  }
+/* TOPBAR */
+.topbar{background:var(--green);color:white;display:flex;align-items:center;justify-content:space-between;padding:13px 16px 11px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(76,175,80,0.35)}
+.topbar-left{display:flex;align-items:center;gap:9px}
+.hamburger-btn{background:none;border:none;color:white;font-size:26px;cursor:pointer;line-height:1;padding:0}
+.topbar-logo{width:38px;height:38px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.2);flex-shrink:0}
+.topbar-logo img{width:30px;height:30px;object-fit:contain}
+.topbar-titles{display:flex;flex-direction:column}
+.topbar-titles h1{font-size:16px;font-weight:900;letter-spacing:0.2px;line-height:1.2}
+.topbar-company{font-size:10px;font-weight:700;opacity:0.88;letter-spacing:0.3px}
+.topbar-icons{display:flex;gap:12px}
+.topbar-icons span{font-size:21px;cursor:pointer}
 
-  /* TOP BAR */
-  .topbar {
-    background: var(--green);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 18px 12px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 10px rgba(76,175,80,0.3);
-  }
-  .topbar-left { display: flex; align-items: center; gap: 10px; }
-  .topbar-logo { width: 36px; height: 36px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  .topbar-logo img { width: 32px; }
-  .topbar h1 { font-size: 18px; font-weight: 800; letter-spacing: 0.3px; }
-  .topbar-icons { display: flex; gap: 14px; }
-  .topbar-icons span { font-size: 22px; cursor: pointer; }
+/* SIDEBAR */
+.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.42);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+.sidebar-overlay.open{opacity:1;pointer-events:all}
+.sidebar{position:fixed;top:0;left:-300px;width:278px;height:100vh;background:white;z-index:201;transition:left .3s cubic-bezier(.4,0,.2,1);box-shadow:4px 0 28px rgba(0,0,0,0.18);display:flex;flex-direction:column}
+.sidebar.open{left:0}
+.sidebar-header{background:var(--green);padding:26px 18px 18px;color:white}
+.sidebar-logo-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.sidebar-logo-circle{width:50px;height:50px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.2);flex-shrink:0}
+.sidebar-logo-circle img{width:38px;height:38px;object-fit:contain}
+.sidebar-header h2{font-size:19px;font-weight:900}
+.sidebar-company-name{font-size:12px;font-weight:700;opacity:.9;margin-top:2px}
+.sidebar-version{font-size:10px;opacity:.65;margin-top:2px}
+.sidebar-menu{flex:1;overflow-y:auto;padding:10px 0}
+.sidebar-item{display:flex;align-items:center;gap:13px;padding:13px 20px;cursor:pointer;font-size:14px;font-weight:800;color:var(--text);transition:background .15s}
+.sidebar-item:active,.sidebar-item.active{background:var(--green);color:white;border-radius:0 30px 30px 0;margin-right:14px}
+.sidebar-item span.icon{font-size:20px;min-width:26px}
+.sidebar-footer{display:flex;border-top:1px solid #eee;padding:12px 18px;gap:16px}
+.sidebar-footer button{flex:1;display:flex;align-items:center;gap:7px;background:none;border:none;font-family:inherit;font-size:13px;font-weight:700;color:var(--text2);cursor:pointer}
 
-  /* HAMBURGER MENU */
-  .hamburger-btn {
-    background: none; border: none; color: white; font-size: 26px; cursor: pointer; line-height: 1;
-  }
+/* MAIN */
+.main{padding:14px 13px 88px;position:relative;z-index:1}
+.section-title{font-size:12px;font-weight:900;color:var(--text2);text-transform:uppercase;letter-spacing:1.2px;margin:16px 0 9px 2px}
 
-  /* SIDEBAR */
-  .sidebar-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s;
-  }
-  .sidebar-overlay.open { opacity: 1; pointer-events: all; }
-  .sidebar {
-    position: fixed; top: 0; left: -300px; width: 280px; height: 100vh; background: white; z-index: 201; transition: left 0.3s cubic-bezier(.4,0,.2,1); box-shadow: 4px 0 24px rgba(0,0,0,0.15); display: flex; flex-direction: column;
-  }
-  .sidebar.open { left: 0; }
-  .sidebar-header {
-    background: var(--green); padding: 28px 20px 20px; color: white;
-  }
-  .sidebar-header .logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .sidebar-header .logo-circle { width: 48px; height: 48px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; }
-  .sidebar-header .logo-circle img { width: 40px; }
-  .sidebar-header h2 { font-size: 20px; font-weight: 900; }
-  .sidebar-header .version { font-size: 12px; opacity: 0.8; }
-  .sidebar-menu { flex: 1; overflow-y: auto; padding: 10px 0; }
-  .sidebar-item {
-    display: flex; align-items: center; gap: 14px; padding: 14px 22px; cursor: pointer; font-size: 15px; font-weight: 700; color: var(--text); transition: background 0.15s;
-  }
-  .sidebar-item:hover, .sidebar-item.active { background: var(--green-light); color: var(--green-dark); border-radius: 0 30px 30px 0; margin-right: 16px; }
-  .sidebar-item.active { background: var(--green); color: white; }
-  .sidebar-item span.icon { font-size: 22px; min-width: 28px; }
-  .sidebar-footer {
-    display: flex; border-top: 1px solid #eee; padding: 14px 20px; gap: 20px;
-  }
-  .sidebar-footer button { flex: 1; display: flex; align-items: center; gap: 8px; background: none; border: none; font-family: inherit; font-size: 14px; font-weight: 700; color: var(--text2); cursor: pointer; }
+/* DASHBOARD SUMMARY */
+.dashboard-summary{background:linear-gradient(135deg,#1565C0,#42A5F5);border-radius:var(--radius);color:white;padding:18px 16px 14px;margin-bottom:13px;box-shadow:0 4px 20px rgba(25,118,210,0.32)}
+.dash-label{font-size:10px;font-weight:800;opacity:.85;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px}
+.dash-big{font-size:30px;font-weight:900;margin-bottom:2px;letter-spacing:-0.5px}
+.dash-earn{font-size:17px;font-weight:800;margin-bottom:3px}
+.dash-sub{font-size:11px;opacity:.82}
 
-  /* MAIN CONTENT */
-  .main { padding: 16px 14px 90px; position: relative; z-index: 1; }
+/* CARDS GRID */
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:13px}
+.stat-card{background:white;border-radius:var(--radius);padding:13px 11px 11px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:3px}
+.sc-icon{font-size:21px}
+.sc-label{font-size:10px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+.sc-val{font-size:24px;font-weight:900;color:var(--text)}
+.sc-sub{font-size:10px;color:var(--text2)}
 
-  /* SECTION TITLE */
-  .section-title { font-size: 13px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin: 18px 0 10px 4px; }
+/* CHART */
+.chart-card{background:white;border-radius:var(--radius);padding:15px;box-shadow:var(--shadow);margin-bottom:13px}
+.chart-card h3{font-size:13px;font-weight:900;margin-bottom:12px;color:var(--text)}
+.bar-chart{display:flex;align-items:flex-end;gap:5px;height:90px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end}
+.bar{width:100%;border-radius:5px 5px 0 0;transition:height .5s;min-height:4px}
+.bar.green{background:linear-gradient(180deg,#43A047,#81C784)}
+.bar.gray{background:var(--gray2)}
+.bar-label{font-size:9px;color:var(--text2);font-weight:800}
+.bar-val{font-size:9px;color:var(--green-dark);font-weight:900}
 
-  /* DASHBOARD - ANA SAYFA */
-  .dashboard-summary {
-    background: linear-gradient(135deg, #1976D2, #42A5F5);
-    border-radius: var(--radius);
-    color: white;
-    padding: 20px 18px 16px;
-    margin-bottom: 14px;
-    box-shadow: 0 4px 20px rgba(25,118,210,0.3);
-  }
-  .dashboard-summary .label { font-size: 11px; font-weight: 700; opacity: 0.85; text-transform: uppercase; letter-spacing: 1px; }
-  .dashboard-summary .big-nums { font-size: 32px; font-weight: 900; margin: 4px 0 2px; }
-  .dashboard-summary .earn { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
-  .dashboard-summary .sub { font-size: 12px; opacity: 0.8; }
+/* FORM */
+.form-group{margin-bottom:13px}
+.form-label{font-size:11px;font-weight:900;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.form-input{width:100%;background:var(--gray);border:2px solid transparent;border-radius:13px;padding:12px 14px;font-size:15px;font-family:inherit;font-weight:700;color:var(--text);outline:none;transition:border-color .2s}
+.form-input:focus{border-color:var(--green);background:white}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.btn-green{width:100%;background:var(--green);color:white;border:none;border-radius:15px;padding:14px;font-size:15px;font-weight:900;font-family:inherit;cursor:pointer;margin-top:4px;letter-spacing:.3px}
+.btn-blue{width:100%;background:linear-gradient(135deg,#1565C0,#42A5F5);color:white;border:none;border-radius:15px;padding:14px;font-size:15px;font-weight:900;font-family:inherit;cursor:pointer;margin-top:4px}
 
-  .progress-card {
-    background: white; border-radius: var(--radius); padding: 16px 16px 14px; box-shadow: var(--shadow); margin-bottom: 14px;
-  }
-  .progress-card .pc-title { font-size: 16px; font-weight: 800; margin-bottom: 12px; }
-  .progress-bar-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text2); margin-bottom: 6px; }
-  .progress-bar-outer { background: var(--gray2); border-radius: 99px; height: 14px; overflow: hidden; margin-bottom: 10px; }
-  .progress-bar-inner { background: linear-gradient(90deg, #1976D2, #42A5F5); border-radius: 99px; height: 100%; transition: width 0.6s cubic-bezier(.4,0,.2,1); }
-  .progress-info { background: var(--blue-light); border-radius: 12px; padding: 10px 14px; font-size: 13px; margin-bottom: 12px; }
-  .progress-info div { margin-bottom: 3px; font-weight: 700; }
-  .btn-share-monthly {
-    width: 100%; background: var(--green); color: white; border: none; border-radius: 14px; padding: 13px; font-size: 15px; font-weight: 800; font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
+/* KAZANÇ PREVIEW */
+.kazanc-preview{background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:14px;padding:14px 16px;margin-bottom:4px;color:white}
+.kp-label{font-size:10px;font-weight:800;opacity:.85;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.kp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.kp-item{background:rgba(255,255,255,0.18);border-radius:10px;padding:7px 6px;text-align:center}
+.kp-item-val{font-size:15px;font-weight:900}
+.kp-item-label{font-size:9px;font-weight:700;opacity:.85}
+.kp-total{margin-top:8px;font-size:20px;font-weight:900;text-align:center;background:rgba(255,255,255,0.2);border-radius:10px;padding:8px}
+.kp-total-label{font-size:10px;opacity:.8;font-weight:700}
 
-  /* CARDS GRID */
-  .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-  .stat-card {
-    background: white; border-radius: var(--radius); padding: 14px 12px 12px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 4px;
-  }
-  .stat-card .sc-icon { font-size: 22px; }
-  .stat-card .sc-label { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
-  .stat-card .sc-val { font-size: 26px; font-weight: 900; color: var(--text); }
-  .stat-card .sc-sub { font-size: 11px; color: var(--text2); }
+/* SAVED BANNER */
+.saved-entry-banner{background:var(--green-light);border-radius:13px;padding:11px 14px;margin-bottom:13px;display:flex;align-items:center;justify-content:space-between;border:1.5px solid #c8e6c9}
+.saved-entry-banner span{font-size:12px;font-weight:800;color:var(--green-dark)}
+.saved-entry-banner button{background:none;border:none;font-size:12px;color:var(--red);font-weight:900;cursor:pointer}
 
-  /* CHART */
-  .chart-card {
-    background: white; border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); margin-bottom: 14px;
-  }
-  .chart-card h3 { font-size: 14px; font-weight: 800; margin-bottom: 14px; color: var(--text); }
-  .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 100px; }
-  .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
-  .bar { width: 100%; border-radius: 6px 6px 0 0; transition: height 0.5s; }
-  .bar.green { background: linear-gradient(180deg, #4CAF50, #81C784); }
-  .bar.blue { background: linear-gradient(180deg, #1976D2, #64B5F6); }
-  .bar-label { font-size: 10px; color: var(--text2); font-weight: 700; }
+/* PROGRESS CARD */
+.progress-card{background:white;border-radius:var(--radius);padding:15px;box-shadow:var(--shadow);margin-bottom:13px}
+.pc-title{font-size:15px;font-weight:900;margin-bottom:13px}
 
-  /* MODAL / DRAWER */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.3s;
-  }
-  .modal-overlay.open { opacity: 1; pointer-events: all; }
-  .modal {
-    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(100%); width: 100%; max-width: 480px; background: white; border-radius: 24px 24px 0 0; z-index: 301; transition: transform 0.35s cubic-bezier(.4,0,.2,1); max-height: 92vh; overflow-y: auto; padding-bottom: 30px;
-  }
-  .modal.open { transform: translateX(-50%) translateY(0); }
-  .modal-handle { width: 40px; height: 4px; background: #ddd; border-radius: 99px; margin: 12px auto 0; }
-  .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px 10px; border-bottom: 1px solid #f0f0f0; }
-  .modal-header h2 { font-size: 18px; font-weight: 900; }
-  .modal-close { background: var(--gray2); border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-  .modal-body { padding: 16px 18px; }
+/* GEÇMİŞ */
+.gecmis-item{background:white;border-radius:var(--radius);padding:13px 15px;box-shadow:var(--shadow);margin-bottom:11px}
+.gecmis-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.gecmis-date{font-size:15px;font-weight:900;display:flex;align-items:center;gap:7px}
+.gecmis-actions{display:flex;gap:8px}
+.gecmis-actions button{background:none;border:none;font-size:19px;cursor:pointer}
+.gecmis-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:5px}
+.gecmis-stat{background:var(--gray);border-radius:9px;padding:7px 5px;text-align:center}
+.gs-label{font-size:9px;font-weight:800;color:var(--text2);text-transform:uppercase}
+.gs-val{font-size:16px;font-weight:900;color:var(--text)}
+.gs-kazanc{background:linear-gradient(135deg,var(--green-dark),var(--green));color:white;border-radius:11px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;margin-top:7px;font-weight:900;font-size:13px}
 
-  /* FORM */
-  .form-group { margin-bottom: 14px; }
-  .form-label { font-size: 12px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-  .form-input {
-    width: 100%; background: var(--gray); border: 2px solid transparent; border-radius: 14px; padding: 13px 16px; font-size: 16px; font-family: inherit; font-weight: 700; color: var(--text); outline: none; transition: border-color 0.2s;
-  }
-  .form-input:focus { border-color: var(--green); background: white; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .btn-primary {
-    width: 100%; background: linear-gradient(135deg, #1976D2, #42A5F5); color: white; border: none; border-radius: 16px; padding: 15px; font-size: 16px; font-weight: 900; font-family: inherit; cursor: pointer; margin-top: 6px; letter-spacing: 0.5px;
-  }
-  .btn-green {
-    width: 100%; background: var(--green); color: white; border: none; border-radius: 16px; padding: 15px; font-size: 16px; font-weight: 900; font-family: inherit; cursor: pointer; margin-top: 6px;
-  }
+/* WA SHARE BTN */
+.wa-btn{width:100%;margin-top:8px;background:#25D366;color:white;border:none;border-radius:12px;padding:10px;font-size:13px;font-weight:900;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;letter-spacing:.3px}
 
-  /* GECMIS LIST */
-  .gecmis-item {
-    background: white; border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); margin-bottom: 12px;
-  }
-  .gecmis-item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-  .gecmis-date { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 800; }
-  .gecmis-actions { display: flex; gap: 10px; }
-  .gecmis-actions button { background: none; border: none; font-size: 20px; cursor: pointer; }
-  .gecmis-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-  .gecmis-stat { background: var(--gray); border-radius: 10px; padding: 8px 6px; text-align: center; }
-  .gecmis-stat .gs-label { font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; }
-  .gecmis-stat .gs-val { font-size: 18px; font-weight: 900; color: var(--text); }
-  .gecmis-share-btn { width: 100%; margin-top: 10px; background: #25D366; color: white; border: none; border-radius: 12px; padding: 10px; font-size: 14px; font-weight: 800; font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+/* GELİR GİDER */
+.gelir-summary{background:linear-gradient(135deg,#2E7D32,#66BB6A);border-radius:var(--radius);color:white;padding:16px;margin-bottom:13px;box-shadow:0 4px 20px rgba(46,125,50,.3)}
+.gelir-summary .gs2-label{font-size:10px;opacity:.85;font-weight:800;text-transform:uppercase;letter-spacing:1px}
+.gelir-summary .gs2-big{font-size:26px;font-weight:900;margin:3px 0}
+.gelir-row{display:flex;gap:0;margin-top:9px}
+.gelir-col{flex:1;text-align:center;padding:8px 0}
+.gelir-col:first-child{border-right:1px solid rgba(255,255,255,.3)}
+.gelir-col .gc-val{font-size:15px;font-weight:900}
+.gelir-col .gc-label{font-size:10px;opacity:.8;font-weight:700}
+.gider-item{background:white;border-radius:13px;padding:11px 13px;box-shadow:var(--shadow);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
+.gi-left{display:flex;align-items:center;gap:9px}
+.gi-icon{font-size:20px}
+.gi-name{font-size:13px;font-weight:800}
+.gi-date{font-size:10px;color:var(--text2)}
+.gi-amount{font-size:15px;font-weight:900;color:var(--red)}
+.gi-del{background:none;border:none;font-size:17px;cursor:pointer;color:var(--text2)}
+.btn-add-gider{width:100%;background:white;border:2px dashed var(--green);border-radius:13px;padding:12px;font-size:13px;font-weight:900;font-family:inherit;color:var(--green);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
 
-  /* GELİR GİDER */
-  .gelir-summary {
-    background: linear-gradient(135deg, #388E3C, #66BB6A); border-radius: var(--radius); color: white; padding: 18px; margin-bottom: 14px; box-shadow: 0 4px 20px rgba(56,142,60,0.3);
-  }
-  .gelir-summary .gs-label { font-size: 11px; opacity: 0.85; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-  .gelir-summary .gs-big { font-size: 28px; font-weight: 900; margin: 4px 0; }
-  .gelir-summary .gs-row { display: flex; gap: 20px; margin-top: 8px; }
-  .gelir-summary .gs-item { text-align: center; }
-  .gelir-summary .gs-item .v { font-size: 16px; font-weight: 800; }
-  .gelir-summary .gs-item .l { font-size: 11px; opacity: 0.8; }
-  .gider-list { margin-bottom: 14px; }
-  .gider-item {
-    background: white; border-radius: 14px; padding: 12px 14px; box-shadow: var(--shadow); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;
-  }
-  .gider-item .gi-left { display: flex; align-items: center; gap: 10px; }
-  .gider-item .gi-icon { font-size: 22px; }
-  .gider-item .gi-name { font-size: 14px; font-weight: 700; }
-  .gider-item .gi-date { font-size: 11px; color: var(--text2); }
-  .gider-item .gi-amount { font-size: 16px; font-weight: 900; color: var(--red); }
-  .gider-item .gi-del { background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text2); }
-  .btn-add-gider {
-    width: 100%; background: white; border: 2px dashed var(--green); border-radius: 14px; padding: 13px; font-size: 14px; font-weight: 800; font-family: inherit; color: var(--green); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
+/* AYLIK RAPOR */
+.rapor-ay-header{background:linear-gradient(135deg,#4527A0,#7C4DFF);border-radius:var(--radius);color:white;padding:18px 16px;margin-bottom:13px;box-shadow:0 4px 18px rgba(69,39,160,.35)}
+.rapor-ay-title{font-size:11px;font-weight:800;opacity:.8;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.rapor-ay-name{font-size:22px;font-weight:900;margin-bottom:12px}
+.rapor-ay-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rapor-ay-item{background:rgba(255,255,255,.18);border-radius:12px;padding:10px 12px}
+.rapor-ai-label{font-size:10px;font-weight:700;opacity:.8;margin-bottom:2px}
+.rapor-ai-val{font-size:18px;font-weight:900}
 
-  /* GIDER MODAL */
-  .kategori-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
-  .kategori-btn {
-    background: var(--gray); border: 2px solid transparent; border-radius: 12px; padding: 12px 8px; font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.15s;
-  }
-  .kategori-btn.selected { border-color: var(--green); background: var(--green-light); color: var(--green-dark); }
-  .kategori-btn .ki { font-size: 20px; }
+.rapor-section{background:white;border-radius:var(--radius);padding:15px;box-shadow:var(--shadow);margin-bottom:13px}
+.rapor-section-title{font-size:12px;font-weight:900;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
 
-  /* AYARLAR */
-  .settings-section { background: white; border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); margin-bottom: 14px; }
-  .settings-section h3 { font-size: 14px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
-  .kdv-result { background: var(--green-light); border-radius: 12px; padding: 12px; margin-top: 10px; font-size: 14px; font-weight: 700; color: var(--green-dark); }
+/* DONUT CHART */
+.donut-wrap{display:flex;align-items:center;gap:16px}
+.donut-svg{flex-shrink:0}
+.donut-legend{flex:1}
+.legend-item{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:12px;font-weight:700}
+.legend-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.legend-val{font-size:13px;font-weight:900;color:var(--text)}
+.legend-pct{font-size:10px;color:var(--text2)}
 
-  /* BOTTOM NAV */
-  .bottom-nav {
-    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: white; border-top: 1px solid #eee; display: flex; z-index: 100; padding-bottom: env(safe-area-inset-bottom);
-  }
-  .nav-item {
-    flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px 0 8px; cursor: pointer; gap: 3px; transition: color 0.15s;
-  }
-  .nav-item .nav-icon { font-size: 22px; }
-  .nav-item .nav-label { font-size: 10px; font-weight: 700; color: var(--text2); }
-  .nav-item.active .nav-label { color: var(--green); }
-  .nav-item.active .nav-icon { filter: drop-shadow(0 0 4px rgba(76,175,80,0.5)); }
-  .nav-item.scan { background: var(--green); border-radius: 16px; margin: -10px 4px 0; padding: 8px 16px; }
-  .nav-item.scan .nav-label { color: white; }
+/* HAFTALAR TABLOSU */
+.hafta-tablo{width:100%;border-collapse:collapse;font-size:12px}
+.hafta-tablo th{text-align:left;font-size:10px;font-weight:800;color:var(--text2);text-transform:uppercase;padding:4px 6px;border-bottom:1px solid var(--gray2)}
+.hafta-tablo td{padding:7px 6px;border-bottom:1px solid var(--gray2);font-weight:700}
+.hafta-tablo tr:last-child td{border-bottom:none}
+.hafta-tablo .val-green{color:var(--green-dark);font-weight:900}
+.hafta-tablo .val-blue{color:var(--blue);font-weight:900}
 
-  /* TOAST */
-  .toast {
-    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px); background: #323232; color: white; padding: 12px 24px; border-radius: 99px; font-size: 14px; font-weight: 700; z-index: 999; opacity: 0; transition: all 0.3s; pointer-events: none; white-space: nowrap;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* EN İYİ / EN KÖTÜ */
+.ek-row{display:flex;gap:9px;margin-bottom:13px}
+.ek-card{flex:1;border-radius:14px;padding:13px;display:flex;flex-direction:column;gap:4px}
+.ek-card.best{background:linear-gradient(135deg,#E8F5E9,#C8E6C9);border:1.5px solid #A5D6A7}
+.ek-card.worst{background:linear-gradient(135deg,#FFF8E1,#FFECB3);border:1.5px solid #FFE082}
+.ek-card .ek-icon{font-size:20px}
+.ek-card .ek-label{font-size:10px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+.ek-card .ek-date{font-size:12px;font-weight:900;color:var(--text)}
+.ek-card .ek-val{font-size:15px;font-weight:900}
 
-  .empty-state { text-align: center; padding: 40px 20px; color: var(--text2); }
-  .empty-state .emoji { font-size: 48px; margin-bottom: 12px; }
-  .empty-state p { font-size: 14px; font-weight: 600; }
+/* WA AY PAYLAS */
+.wa-ay-btn{width:100%;background:linear-gradient(135deg,#128C7E,#25D366);color:white;border:none;border-radius:15px;padding:15px;font-size:15px;font-weight:900;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:.4px;box-shadow:0 4px 14px rgba(37,211,102,.35)}
 
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
+/* AY SEÇİCİ */
+.ay-secici{display:flex;align-items:center;justify-content:space-between;background:white;border-radius:13px;padding:10px 14px;box-shadow:var(--shadow);margin-bottom:13px}
+.ay-secici button{background:var(--gray2);border:none;border-radius:8px;padding:6px 12px;font-size:16px;cursor:pointer;font-weight:900}
+.ay-secici .ay-text{font-size:14px;font-weight:900;color:var(--text)}
 
-  /* Scroll indicator */
-  .scroll-hint { text-align: center; color: var(--text2); font-size: 12px; margin: 8px 0; }
+/* AYARLAR */
+.settings-section{background:white;border-radius:var(--radius);padding:15px;box-shadow:var(--shadow);margin-bottom:13px}
+.settings-section h3{font-size:12px;font-weight:900;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:13px;display:flex;align-items:center;gap:5px}
+.settings-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #f5f5f5}
+.settings-row:last-child{border-bottom:none}
+.sr-left{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700}
+.sr-icon{font-size:19px}
+.sr-right{font-size:12px;font-weight:800;cursor:pointer;color:var(--green)}
+.profile-row{display:flex;align-items:center;gap:13px;padding:13px;background:white;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:13px}
+.profile-avatar{width:54px;height:54px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.profile-info h3{font-size:15px;font-weight:900}
+.profile-info p{font-size:12px;color:var(--text2);font-weight:600}
+.kdv-result{background:var(--green-light);border-radius:11px;padding:11px;margin-top:9px;font-size:13px;font-weight:700;color:var(--green-dark)}
+
+/* ŞİRKET SEÇİM */
+.sirket-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.sirket-card{border:2.5px solid var(--gray2);border-radius:15px;padding:13px 9px;cursor:pointer;text-align:center;transition:all .2s;background:white;position:relative}
+.sirket-card.selected{border-color:var(--green);background:var(--green-light);box-shadow:0 0 0 3px rgba(76,175,80,.18)}
+.check-badge{position:absolute;top:7px;right:7px;background:var(--green);color:white;border-radius:50%;width:19px;height:19px;font-size:11px;display:none;align-items:center;justify-content:center}
+.sirket-card.selected .check-badge{display:flex}
+.sirket-logo-box{width:52px;height:52px;border-radius:13px;margin:0 auto 7px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:white;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+.sirket-logo-box img{width:44px;height:44px;object-fit:contain}
+.emoji-logo{font-size:28px}
+.sirket-name{font-size:11px;font-weight:900;color:var(--text)}
+.sirket-type{font-size:9px;color:var(--text2);margin-top:2px;font-weight:700}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);width:100%;max-width:480px;background:white;border-radius:22px 22px 0 0;z-index:301;transition:transform .35s cubic-bezier(.4,0,.2,1);max-height:92vh;overflow-y:auto;padding-bottom:28px}
+.modal.open{transform:translateX(-50%) translateY(0)}
+.modal-handle{width:38px;height:4px;background:#ddd;border-radius:99px;margin:11px auto 0}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px 9px;border-bottom:1px solid #f0f0f0}
+.modal-header h2{font-size:17px;font-weight:900}
+.modal-close{background:var(--gray2);border:none;border-radius:50%;width:31px;height:31px;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-body{padding:14px 16px}
+.kategori-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:13px}
+.kategori-btn{background:var(--gray);border:2px solid transparent;border-radius:11px;padding:11px 7px;font-size:13px;font-weight:800;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .15s}
+.kategori-btn.selected{border-color:var(--green);background:var(--green-light);color:var(--green-dark)}
+.ki{font-size:19px}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:white;border-top:1px solid #eee;display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:9px 0 7px;cursor:pointer;gap:2px;transition:color .15s}
+.nav-icon{font-size:20px}
+.nav-label{font-size:9px;font-weight:800;color:var(--text2)}
+.nav-item.active .nav-label{color:var(--green)}
+
+/* TOAST */
+.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(16px);background:#222;color:white;padding:11px 22px;border-radius:99px;font-size:13px;font-weight:800;z-index:999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.empty-state{text-align:center;padding:36px 18px;color:var(--text2)}
+.empty-state .emoji{font-size:44px;margin-bottom:10px}
+.empty-state p{font-size:13px;font-weight:700}
+.tab-content{display:none}
+.tab-content.active{display:block}
 </style>
 </head>
 <body>
 
-<!-- Logo Arka Plan -->
-<img class="logo-bg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus_ant.jpg/320px-Camponotus_flavomarginatus_ant.jpg" alt="" id="logoBg">
-
-<!-- TOP BAR -->
+<!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-left">
     <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
-    <div class="topbar-logo">
-      <svg width="28" height="28" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="48" fill="none" stroke="#4CAF50" stroke-width="6"/>
-        <ellipse cx="42" cy="35" rx="14" ry="18" fill="#bbb"/>
-        <circle cx="42" cy="33" r="7" fill="#888"/>
-        <path d="M28 52 Q42 68 56 52" fill="#4CAF50" stroke="none"/>
-        <path d="M30 54 L42 66 L56 50" fill="none" stroke="#4CAF50" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        <text x="58" y="52" font-family="Arial" font-weight="bold" font-size="16" fill="#4CAF50">kolay</text>
-        <text x="58" y="68" font-family="Arial" font-weight="bold" font-size="16" fill="#4CAF50">gelsin</text>
-      </svg>
+    <div class="topbar-logo" id="topbarLogoBox"></div>
+    <div class="topbar-titles">
+      <h1>kolay gelsin</h1>
+      <div class="topbar-company" id="topbarCompanyName">Şirket seçilmedi</div>
     </div>
-    <h1>kolay gelsin</h1>
   </div>
   <div class="topbar-icons">
-    <span onclick="openModal('ayarlarModal')">⚙️</span>
+    <span onclick="switchTab('ayarlar')">⚙️</span>
     <span>🔔</span>
   </div>
 </div>
 
-<!-- SIDEBAR OVERLAY -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-
 <!-- SIDEBAR -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
-    <div class="logo-row">
-      <div class="logo-circle">
-        <svg width="36" height="36" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="48" fill="none" stroke="#4CAF50" stroke-width="6"/>
-          <ellipse cx="42" cy="35" rx="14" ry="18" fill="#bbb"/>
-          <circle cx="42" cy="33" r="7" fill="#888"/>
-          <path d="M30 54 L42 66 L56 50" fill="none" stroke="#4CAF50" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-          <text x="58" y="52" font-family="Arial" font-weight="bold" font-size="16" fill="#4CAF50">kolay</text>
-          <text x="58" y="68" font-family="Arial" font-weight="bold" font-size="16" fill="#4CAF50">gelsin</text>
-        </svg>
-      </div>
+    <div class="sidebar-logo-row">
+      <div class="sidebar-logo-circle" id="sidebarLogoBox"></div>
       <div>
         <h2>kolay gelsin</h2>
-        <div class="version">Kurye Takip v1.0</div>
+        <div class="sidebar-company-name" id="sidebarCompanyName">—</div>
+        <div class="sidebar-version">Kurye Takip v2.0</div>
       </div>
     </div>
   </div>
   <div class="sidebar-menu">
-    <div class="sidebar-item active" onclick="switchTab('anasayfa'); toggleSidebar()">
-      <span class="icon">🏠</span> Ana Sayfa
-    </div>
-    <div class="sidebar-item" onclick="switchTab('teslimat'); toggleSidebar()">
-      <span class="icon">🚀</span> Teslimat Girişi
-    </div>
-    <div class="sidebar-item" onclick="switchTab('gecmis'); toggleSidebar()">
-      <span class="icon">📋</span> Geçmiş
-    </div>
-    <div class="sidebar-item" onclick="switchTab('raporlar'); toggleSidebar()">
-      <span class="icon">📊</span> Genel Raporlar
-    </div>
-    <div class="sidebar-item" onclick="switchTab('gelgid'); toggleSidebar()">
-      <span class="icon">💰</span> Takip Gelir Gider
-    </div>
-  </div>
-  <div class="sidebar-footer">
-    <button onclick="openModal('ayarlarModal'); toggleSidebar()">⚙️ Ayarlar</button>
-    <button>🚪 Çıkış</button>
-  </div>
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-  <!-- ANA SAYFA -->
-  <div id="tab-anasayfa" class="tab-content active">
-    <div class="section-title">📅 Bu Ay Özeti</div>
-    <div class="dashboard-summary" id="dashSummary">
-      <div class="label">AYLIK NET DURUMU</div>
-      <div class="big-nums" id="dashBigNums">0 G / 0 P</div>
-      <div class="earn" id="dashEarn">Kazanç: 0 ₺</div>
-      <div class="sub" id="dashSub">Brüt: 0 | Devir: 0 | Toplama: 0</div>
-    </div>
-
-    <div class="cards-grid">
-      <div class="stat-card">
-        <span class="sc-icon">🎯</span>
-        <span class="sc-label">Net Görev</span>
-        <span class="sc-val" id="scNetGorev">0</span>
-        <span class="sc-sub">Bu ay</span>
-      </div>
-      <div class="stat-card">
-        <span class="sc-icon">💎</span>
-        <span class="sc-label">Net Parça</span>
-        <span class="sc-val" id="scNetParca">0</span>
-        <span class="sc-sub">Bu ay</span>
-      </div>
-      <div class="stat-card">
-        <span class="sc-icon">🛣️</span>
-        <span class="sc-label">Toplam KM</span>
-        <span class="sc-val" id="scKm">0</span>
-        <span class="sc-sub">Bu ay</span>
-      </div>
-      <div class="stat-card">
-        <span class="sc-icon">🔄</span>
-        <span class="sc-label">Toplama</span>
-        <span class="sc-val" id="scToplama">0</span>
-        <span class="sc-sub">Bu ay</span>
-      </div>
-    </div>
-
-    <div class="chart-card">
-      <h3>📈 Son 7 Günlük Net Görev</h3>
-      <div class="bar-chart" id="barChart">
-        <div class="empty-state" sty
+    <div class="sidebar-item active" onclick="switchTab('anasayfa');toggleSidebar()"><span class="icon">🏠</span>Ana Sayfa</div>
+    <div class="sidebar-item" onclick="switchTab('teslimat');toggleSidebar()"><span class="icon">🚀</span>Teslimat Girişi</div>
+    <div class="sidebar-item" onclick="switchTab('gecmis');toggleSidebar()"><span class="icon">📋</span>Geçmiş</div>
+    <div class="sidebar-item" onclick="switchTab('ozet');toggleSidebar()"><span class="icon">📊</span>Aylık Özet</div>
+    <div 
